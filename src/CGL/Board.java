@@ -5,14 +5,20 @@ public class Board {
 	
 	//creates a Conways game board with given values
 		//return the present generation board and next generation board
-	public boolean[][] createBoard(int n) {
-		boolean[][] board = new boolean[n][n];
+	public boolean[][] createBoard(int n) {		
+		if(n<0) {
+			return null;
+		}
+		else {
+			boolean[][] board = new boolean[n][n];
 			for(int i=0;i<board.length;i++) {
 				for(int j=0;j<board[i].length;j++) {
 					board[i][j]=false;
+					}
 				}
-			}
 			return(printBoard(board));
+			}
+		
 		}
 	public boolean[][] printBoard(boolean[][] board) {
 		for(int i=0;i<board.length;i++) {
@@ -30,4 +36,5 @@ public class Board {
 		}
 		return board;
 	}
+	
 }

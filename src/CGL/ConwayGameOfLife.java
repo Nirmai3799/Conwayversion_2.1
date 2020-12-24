@@ -1,6 +1,6 @@
 package CGL;
 public class ConwayGameOfLife extends Board{
-	boolean[][] current=createBoard(10);
+	
 	public int countLiveCells(boolean[][] current,int p,int q){
         int n = current.length;
         int lives=0;
@@ -15,29 +15,32 @@ public class ConwayGameOfLife extends Board{
             }
         return lives;
         }
-	public String generateNextGeneration(boolean current[][]) {
+	public String generateNextGeneration(boolean current[][],int x) {
         int n = current.length;
         boolean[][] newBoard = new boolean[n][n];
-        for(int i=0;i<n;i++){
-        	for(int j=0;j<n;j++){
-        		int ilives = countLiveCells(current,i,j);
-        		if(current[i][j]){
-        			if(ilives<2){
-        				newBoard[i][j]=false;
+        for(int a=0;a<x;a++) {
+        	for(int i=0;i<n;i++){
+        		for(int j=0;j<n;j++){
+        			int ilives = countLiveCells(current,i,j);
+        			if(current[i][j]){
+        				if(ilives<2){
+        					newBoard[i][j]=false;
+        					}
+        				else if(ilives<=3){
+        					newBoard[i][j]=true;
+        					}
+        				else if(ilives>3){
+        					newBoard[i][j]=false;
+        					}
         				}
-        			else if(ilives<=3){
-        				newBoard[i][j]=true;
-        				}
-        			else if(ilives>3){
-        				newBoard[i][j]=false;
-        				}
-        			}
         			else{
         				if(ilives==3){
         					newBoard[i][j] = true;
         					}
         				}
+        			}
         		}
+        	current=newBoard;
         	}
         return displayBoard(newBoard);
     }
