@@ -1,5 +1,5 @@
 package CGL;
-public class ConwayGameOfLife extends Board{
+public class ConwayGameOfLife {
 	
 	public int countLiveCells(boolean[][] current,int p,int q){
         int n = current.length;
@@ -16,6 +16,7 @@ public class ConwayGameOfLife extends Board{
         return lives;
         }
 	public String generateNextGeneration(boolean current[][],int x) {
+		
         int n = current.length;
         boolean[][] newBoard = new boolean[n][n];
         if(x<=0) {
