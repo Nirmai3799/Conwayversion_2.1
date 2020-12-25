@@ -24,4 +24,12 @@ public class TestJunit {
 		Assertions.assertEquals("..........\n...**.....\n...**.....\n..........\n...**.....\n....*.....\n..*.**....\n...***....\n....**....\n..........\n",((ConwayGameOfLife) b).generateNextGeneration(b.createBoard(10),2));
 		
 	}
+	@Test
+	public void testBoard4() {
+		Board b = new ConwayGameOfLife();
+		System.out.println("======TEST FOUR EXECUTED=======");
+		Assertions.assertEquals("Iteration can't be performed.",((ConwayGameOfLife) b).generateNextGeneration(b.createBoard(10),-3));
+	}
+	
+	
 }
