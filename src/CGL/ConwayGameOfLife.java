@@ -15,14 +15,14 @@ public class ConwayGameOfLife {
             }
         return lives;
         }
-	public String generateNextGeneration(boolean current[][],int x) {
+	public boolean[][] generateNextGeneration(boolean current[][],int x) {
 		
         int n = current.length;
         boolean[][] newBoard = new boolean[n][n];
         if(x<=0) {
-        	return "Iteration can't be performed.";
+        	return null;
         }
-        for(int a=0;a<x;a++) {
+       
         	for(int i=0;i<n;i++){
         		for(int j=0;j<n;j++){
         			int ilives = countLiveCells(current,i,j);
@@ -45,8 +45,11 @@ public class ConwayGameOfLife {
         			}
         		}
         	current=newBoard;
+        	while(x>1){
+	        	newBoard=generateNextGeneration(newBoard,1);
+	        	x--;
         	}
-        return displayBoard(newBoard);
+        return newBoard;
     }
    public String displayBoard(boolean[][] board) {
 		StringBuffer sb = new StringBuffer();

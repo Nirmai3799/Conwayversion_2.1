@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import CGL.Board;
+import CGL.ConwayGameOfLife;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -32,6 +33,23 @@ import javafx.scene.shape.Rectangle;
  * 
  */
 public class UserInterface {
+	private int[][] liveCells;    
+	private boolean[][] board1;  
+	public UserInterface() {    
+		
+	}
+	public void setLivecells(int [][] liveCells) {  
+		this.liveCells=liveCells;
+	}
+	public int[][] getLivecells(){ 				
+		return liveCells;
+	}
+	public void setBoard1(boolean [][] board1) {		
+		this.board1=board1;
+	}
+	public boolean[][] getBoard1(){				
+		return board1;
+	}
 	
 	/**********************************************************************************************
 
@@ -276,15 +294,15 @@ public class UserInterface {
 				list.add(scan.nextInt());
 				
 			}
-			int [][] liveCells = new int[list.size()/2][2];
+			this.liveCells = new int[list.size()/2][2];
 			int k=0;
 			for(int i=0;i<list.size()/2;i++) {
-				liveCells[i][0]=list.get(k++);
-				liveCells[i][1]=list.get(k++);
+				this.liveCells[i][0]=list.get(k++);
+				this.liveCells[i][1]=list.get(k++);
 			}
-			System.out.println(Arrays.deepToString(liveCells));
-			oddGameBoard.createBoard(100,liveCells);
-			populateCanvas(oddCanvas,liveCells);
+			System.out.println(Arrays.deepToString(this.liveCells));
+			this.board1=oddGameBoard.createBoard(100,liveCells);
+			populateCanvas(oddCanvas);
 			
 		}
 		catch (Exception e)  {
@@ -294,20 +312,20 @@ public class UserInterface {
 		button_Load.setDisable(true);				// Disable the Load button, since it is done
 		button_Start.setDisable(false);				// Enable the Start button
 	};	//and wait for the User to press it.
-    private void populateCanvas(Pane canvas, int [][] x) {
-    	boolean[][] s = oddGameBoard.createBoard(100,x);
+    private void populateCanvas(Pane canvas) {
+    	//boolean[][] s = oddGameBoard.createBoard(100,x);
     	//System.out.println(s);
     	int a =0;
-    	for(int i=0;i<s.length-1;i++) {
-    		for(int j=0;j<s[i].length-1;j++) {
-    			if(s[i][j]) {
+    	for(int i=0;i<this.board1.length-1;i++) {
+    		for(int j=0;j<this.board1[i].length-1;j++) {
+    			if(this.board1[i][j]) {
     				a=a+1;
-    				Rectangle rc = new Rectangle(6*j+20,6*i+20,5,5);
+    				Rectangle rc = new Rectangle(6*i,6*j,5,5);
     				canvas.getChildren().add(rc);
     			}
     		}
     	}
-    	System.out.println(a);
+    	//System.out.println(a);
     	window.getChildren().add(canvas);
     	
     }
@@ -343,7 +361,7 @@ public class UserInterface {
 		window.getChildren().remove(oddCanvas);
 		if(toggle) {
 			oddCanvas.getChildren().clear();
-			window.getChildren().remove(oddCanvas);
+			
 			oddGameBoard.generateNextGeneration();
 			populateCanvas(evenCanvas);
 			toggle=false;
@@ -357,7 +375,11 @@ public class UserInterface {
 			
 		}**/
 		// Your code goes here...
-		populateCanvas(oddCanvas,null);
+		window.getChildren().remove(oddCanvas);
+		ConwayGameOfLife cl=new ConwayGameOfLife();
+		this.board1=cl.generateNextGeneration(this.board1,1);
+		//oddCanvas= new Pane();
+		populateCanvas(oddCanvas);
 	}
 
 	/**********
